@@ -151,12 +151,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WSe-3w-96h">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="67" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="WSe-3w-96h">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SwitchCell" rowHeight="67" id="1Cl-xL-y1J" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="67"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="320" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Cl-xL-y1J" id="Pqf-7U-By7">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="66.5"/>
@@ -182,6 +182,31 @@
                                         <connections>
                                             <outlet property="onSwitch" destination="ZFn-v4-0JP" id="sGw-OS-FSu"/>
                                             <outlet property="switchLabel" destination="uS2-1w-OgP" id="QQk-E6-mGO"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DropCell" rowHeight="67" id="dEF-fn-BiP" customClass="DropCell">
+                                        <rect key="frame" x="0.0" y="180.5" width="320" height="67"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dEF-fn-BiP" id="PDm-SS-o5P">
+                                            <rect key="frame" x="0.0" y="0.0" width="281" height="66.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ol5-2N-3Lp">
+                                                    <rect key="frame" x="15" y="23" width="169" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ol5-2N-3Lp" firstAttribute="leading" secondItem="PDm-SS-o5P" secondAttribute="leading" constant="15" id="1Ud-8x-RuL"/>
+                                                <constraint firstItem="ol5-2N-3Lp" firstAttribute="centerY" secondItem="PDm-SS-o5P" secondAttribute="centerY" id="dwT-lf-tS4"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="dropLabel" destination="ol5-2N-3Lp" id="AhM-Oh-pgh"/>
+                                            <outlet property="switchLabel" destination="ol5-2N-3Lp" id="7sh-Hm-Hv0"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
