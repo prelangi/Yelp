@@ -18,6 +18,9 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
 
             tableView.dataSource = self
             tableView.delegate = self
+            tableView.rowHeight = UITableViewAutomaticDimension
+            tableView.estimatedRowHeight = 120 //used only for scroll height
+        
         Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
         
