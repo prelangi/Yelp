@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol FiltersViewControllerDelegate {
     optional func filtersViewController(filterViewController: FiltersViewController, didUpdateFilters filters: [String:AnyObject])
+    
 }
 
 class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,SwitchCellDelegate {
@@ -18,6 +19,22 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //Empty dictionary
     var switchStates = [Int:Bool]()
     var dealState: Bool = false
+    var selectedDistance:Int?
+    
+    var selectedSortType:YelpSortMode?
+    var sortTypes: [String] = ["Best Match", "Distance", "Highest Rated"]
+    var sortValues: [YelpSortMode] = [YelpSortMode.BestMatched, YelpSortMode.Distance, YelpSortMode.HighestRated]
+    
+    var sortSelected: [Bool] = [false,false,false]
+    
+    var distanceLabels: [String] = ["0.3 miles", "1 mile", "3 miles", "5 miles"]
+    var distanceValues: [Int] = [482, 1609, 4828, 8046]
+    var distanceSelected: [Bool] = [false,false,false,false]
+    
+    var distanceCollapsedView = false
+
+    
+    
     weak var delegate:FiltersViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -64,17 +81,40 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
             filters["deals"] = dealState
         }
         
+        if (selectedDistance != nil) {
+            filters["radius"] = selectedDistance
+        }
+        
+        if (selectedSortType != nil) {
+            filters["sortType"] = selectedSortType?.rawValue
+        }
+        
         delegate?.filtersViewController?(self, didUpdateFilters: filters)
         
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        //
         if(section==0) {
             return 1
         }
         
+        //Distance
         if(section==1) {
+            if(distanceCollapsedView) {
+                return 1
+            }
+            else {
+                return 4
+            }
+        }
+        
+        //Sort type
+        if(section==2) {
+            return 3
+        }
+        if(section==3) {
             return categories.count
         }
         
@@ -85,6 +125,7 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell:SwitchCell!
         
+        //Deals
         if(indexPath.section==0) {
             cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             cell.switchLabel.text = "Offering a Deal"
@@ -94,18 +135,44 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
         }
         
+        //Distance
         if(indexPath.section==1) {
+            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            cell.switchLabel.text = distanceLabels[indexPath.row]
+            cell.delegate = self
+            cell.onSwitch.on = distanceSelected[indexPath.row]
+        }
+        
+        //Sort by
+        if(indexPath.section==2) {
+            cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            cell.switchLabel.text = sortTypes[indexPath.row]
+            cell.delegate = self
+            cell.onSwitch.on = sortSelected[indexPath.row]
+            
+        }
+        
+        //Categories
+        if(indexPath.section==3) {
             cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             cell.switchLabel.text = categories[indexPath.row]["name"]
             cell.delegate = self
             cell.onSwitch.on = switchStates[indexPath.row] ?? false
             
         }
+        
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.section==1) {
+            distanceCollapsedView = false
+            self.tableView.reloadData()
+        }
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 4
     }// Default is 1 if not implemented
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -115,6 +182,12 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
             sectionName = "Deal"
         }
         if(section==1) {
+            sectionName = "Distance"
+        }
+        if(section==2) {
+            sectionName = "Sort by"
+        }
+        if(section==3) {
             sectionName = "Categories"
         }
         
@@ -131,8 +204,25 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 dealState = value
                 print("dealState set to \(dealState)")
             }
-            
             if(indexPath.section==1) {
+                selectedDistance = distanceValues[indexPath.row]
+                distanceSelected[indexPath.row] = value
+                print("selectedDistance = \(selectedDistance)m")
+            }
+            
+            if(indexPath.section==2) {
+                switch indexPath.row {
+                case 0:selectedSortType = YelpSortMode.BestMatched
+                case 1: selectedSortType = YelpSortMode.Distance
+                case 2: selectedSortType = YelpSortMode.HighestRated
+                default: selectedSortType = YelpSortMode.BestMatched
+                }
+                //selectedSortType = sortValues[indexPath.row]
+                sortSelected[indexPath.row] = value
+                print("selectedSortType = \(selectedSortType)")
+            }
+            
+            if(indexPath.section==3) {
                 switchStates[indexPath.row] = value
             }
             
@@ -142,10 +232,6 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     
-    
-
-    
-
     func yelpCategories()->[[String:String]] {
         return[["name" : "Afghan", "code": "afghani"],
         ["name" : "African", "code": "african"],

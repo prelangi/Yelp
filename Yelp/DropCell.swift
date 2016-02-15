@@ -10,8 +10,9 @@ import UIKit
 
 class DropCell: UITableViewCell {
 
-    @IBOutlet weak var dropLabel: UILabel!
     
+    
+    @IBOutlet weak var dropLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

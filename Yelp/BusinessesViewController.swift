@@ -16,10 +16,19 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-            tableView.dataSource = self
-            tableView.delegate = self
-            tableView.rowHeight = UITableViewAutomaticDimension
-            tableView.estimatedRowHeight = 120 //used only for scroll height
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120 //used only for scroll height
+        
+        //let searchBar = UISearchBar()
+        //searchBar.sizeToFit()
+        
+        // the UIViewController comes with a navigationItem property
+        // this will automatically be initialized for you if when the
+        // view controller is added to a navigation controller's stack
+        // you just need to set the titleView to be the search bar
+        //navigationItem.titleView = searchBar
         
         Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
@@ -91,8 +100,14 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
         
         let categories = filters["categories"] as? [String]
         let deals = filters["deals"] as? Bool
+        let radius = filters["radius"] as? Int
+        let sortType = filters["sortType"] as? Int
+        let yelpSortType = (sortType==0) ? YelpSortMode.BestMatched : ((sortType==1) ? YelpSortMode.Distance : YelpSortMode.HighestRated)
         
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: deals) { (businesses: [Business]!, error: NSError!) -> Void in
+        
+        print("In delegate method: sortType = \(sortType)")
+
+        Business.searchWithTerm("Restaurants", sort: yelpSortType, categories: categories, deals: deals,radius: radius) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.tableView.reloadData()
             
