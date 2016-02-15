@@ -125,7 +125,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Yelp" id="5G0-3W-lBr">
-                        <barButtonItem key="leftBarButtonItem" title="Filters" id="zmE-zU-spH">
+                        <barButtonItem key="leftBarButtonItem" image="Filter-24" id="zmE-zU-spH">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="cq2-gh-3LD" kind="modal" id="dQe-sT-idH"/>
                             </connections>
@@ -151,12 +152,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="67" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="WSe-3w-96h">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="67" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WSe-3w-96h">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SwitchCell" rowHeight="67" id="1Cl-xL-y1J" customClass="SwitchCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="113.5" width="320" height="67"/>
+                                        <rect key="frame" x="0.0" y="92" width="320" height="67"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Cl-xL-y1J" id="Pqf-7U-By7">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="66.5"/>
@@ -197,11 +198,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Filters" id="qgR-E9-P4r">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="8P0-Tb-Ch4">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onCancelButton:" destination="pMM-FR-6k9" id="pPI-AD-2Le"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Search" id="Xf1-Gh-UKW">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onSearchButton:" destination="pMM-FR-6k9" id="e5b-zG-zY8"/>
                             </connections>
@@ -252,4 +255,7 @@
             <point key="canvasLocation" x="1862" y="338"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Filter-24" width="24" height="24"/>
+    </resources>
 </document>

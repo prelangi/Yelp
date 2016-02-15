@@ -14,6 +14,9 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
     var businesses: [Business]!
     var filtered: [Business]!
     
+    //rgb(196,18,0)
+    var yelpRedColor = UIColor(red: 196/255.0, green: 18/255.0, blue: 0/255.0, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +35,7 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
         // view controller is added to a navigation controller's stack
         // you just need to set the titleView to be the search bar
         navigationItem.titleView = searchBar
+        self.navigationController!.navigationBar.barTintColor = yelpRedColor
         
         fetchBusinesses("Restaurants")
 

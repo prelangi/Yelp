@@ -32,6 +32,8 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var distanceSelected: [Bool] = [false,false,false,false]
     
     var distanceCollapsedView = false
+    //rgb(196,18,0)
+    var yelpRedColor = UIColor(red: 196/255.0, green: 18/255.0, blue: 0/255.0, alpha: 1.0)
 
     
     
@@ -44,6 +46,11 @@ class FiltersViewController: UIViewController,UITableViewDelegate,UITableViewDat
         tableView.dataSource = self
         tableView.delegate = self
         
+        
+        self.navigationController!.navigationBar.barTintColor = yelpRedColor
+        
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 40
         
         // Do any additional setup after loading the view.
     }
