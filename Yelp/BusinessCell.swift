@@ -30,7 +30,13 @@ class BusinessCell: UITableViewCell {
     var business: Business! {
         didSet {
             nameLabel.text = business.name
-            thumbImageView.setImageWithURL(business.imageURL!)
+            if let imageURL = business.imageURL {
+               thumbImageView.setImageWithURL(imageURL)
+            }
+            else {
+                thumbImageView.image = nil
+            }
+            
             categoriesLabel.text = business.categories
             addressLabel.text = business.address
             ratingsImageView.setImageWithURL(business.ratingImageURL!)

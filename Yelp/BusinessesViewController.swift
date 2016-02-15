@@ -8,10 +8,11 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,FiltersViewControllerDelegate,UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     var businesses: [Business]!
+    var filtered: [Business]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,18 +22,26 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120 //used only for scroll height
         
-        //let searchBar = UISearchBar()
-        //searchBar.sizeToFit()
+        let searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        
         
         // the UIViewController comes with a navigationItem property
         // this will automatically be initialized for you if when the
         // view controller is added to a navigation controller's stack
         // you just need to set the titleView to be the search bar
-        //navigationItem.titleView = searchBar
+        navigationItem.titleView = searchBar
         
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        fetchBusinesses("Restaurants")
+
+
+    }
+    
+    func fetchBusinesses(searchTerm: String) {
+        Business.searchWithTerm(searchTerm, completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
-        
+            
             self.tableView.reloadData()
             
             for business in businesses {
@@ -40,17 +49,7 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
                 print(business.address!)
             }
         })
-
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -112,6 +111,40 @@ class BusinessesViewController: UIViewController,UITableViewDataSource,UITableVi
             self.tableView.reloadData()
             
         }
+    }
+    
+    ///// Search Bar functionality
+    func searchBar(searchBar: UISearchBar,  textDidChange searchText: String) {
+        var searchTerm: String = ""
+        if(searchText=="") {
+            searchTerm = "Restaurants"
+        }
+        else {
+            searchTerm = searchText
+        }
+        
+        fetchBusinesses(searchTerm)
+        
+
+    }
+    
+    //******  Search Bar functions
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+        searchBar.becomeFirstResponder()
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.view.endEditing(true)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
 
